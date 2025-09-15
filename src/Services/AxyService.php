@@ -8,4 +8,9 @@ class AxyService
 	{
 		return "AxyService::abc() 被调用";
 	}
+
+	public function abd()
+	{
+		return "AxyService::abd() 被调用";
+	}
 }
