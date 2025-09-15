@@ -4,6 +4,11 @@ namespace Linshunwei\Uniin;
 
 use Exception;
 
+
+/**
+ * @property \Linshunwei\Uniin\Services\WhitelistCallerService $whitelistCaller
+ */
+
 class Uniin
 {
 	protected $services = [];
