@@ -23,7 +23,7 @@ class WhitelistCallerService  extends BaseService
 	{
 		$data = [
 			'appId' => $this->config['app_id'],
-			'caller' => 0, // 0 手机号 1 固定电话
+			'numType' => 0, // 0 手机号 1 固定电话
 			'optType' => $optType, //0 新增成员 1 删除成员
 			'reportType' => 0, //0 个人 1法人 2经办人 如果号码类型为固定电话，则需要传 1 或 2
 			'member' => $this->sm4_encrypt_ecb(json_encode($member)),
