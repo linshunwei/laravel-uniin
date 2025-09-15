@@ -7,6 +7,10 @@ use Exception;
 
 /**
  * @property \Linshunwei\Uniin\Services\WhitelistCallerService $whitelistCaller
+ * @property \Linshunwei\Uniin\Services\AxbService $axb
+ * @property \Linshunwei\Uniin\Services\AxybService $axyb
+ * @property \Linshunwei\Uniin\Services\AxnService $axn
+ * @property \Linshunwei\Uniin\Services\AxnExtService $axnExt
  */
 
 class Uniin
