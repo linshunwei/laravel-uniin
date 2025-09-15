@@ -1,0 +1,26 @@
+{
+    "name": "linshunwei/laravel-uniin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "linshunwei",
+            "email": "lsw.nba@163.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "classmap": ["src/"],
+        "psr-4": {
+            "Linshunwei\\Uniin\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Linshunwei\\Uniin\\UniinServiceProvider"
+            ]
+        }
+    }
+}
