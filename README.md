@@ -6,6 +6,7 @@
   - [AXB](#AXB)
   - [AXN](#AXN)
   - [AXN分机号](#AXN分机号)
+  - [白名单](#白名单)
 - # 项目介绍
 联通 COP 平台
 
@@ -74,4 +75,11 @@ use Linshunwei\Uniin\Facades\Uniin;
  $uniin->axnExt->stdRelease();//解绑
  $uniin->axnExt->stdUpdate(); //更新
  $uniin->axnExt->query(); //查询
+```
+
+## 白名单号码
+```php
+ $uniin->whitelistCaller->report(); //报备申请接口
+ $uniin->whitelistCaller->reportStatus();//报备结果查询接口
+ $uniin->whitelistCaller->query(); //报备结果查询接口
 ```
