@@ -62,7 +62,7 @@ class AxnService extends BaseService
 	 * @param int|null $autoBandingDuration //自动axb绑定时，绑定的有效时长，单位是秒，到时后会映射关系自动释放。缺省为7200秒。
 	 * @return mixed
 	 */
-	public function stdUpdate(string $mappingId, string $bNumber = '', int $mappingDuration = null, int $autoBandingDuration = null)
+	public function stdUpdate(string $mappingId, string $bNumber = '', int $mappingDuration = null, int $autoBandingDuration = null): mixed
 	{
 		$data = [
 			'appId' => $this->config['app_id'],

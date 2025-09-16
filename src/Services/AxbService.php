@@ -62,7 +62,7 @@ class AxbService extends BaseService
 	 * @param int|null $mappingDuration 绑定的指定有效时长，单位是秒，到时后会映射关系自动释放。0表示不指定绑定时长，则平台将保留绑定关系4 个月。默认值为7200
 	 * @return mixed
 	 */
-	public function stdUpdate(string $mappingId, string $aNumber = '',string $bNumber = '', int $mappingDuration = null)
+	public function stdUpdate(string $mappingId, string $aNumber = '',string $bNumber = '', int $mappingDuration = null): mixed
 	{
 		$data = [
 			'appId' => $this->config['app_id'],
