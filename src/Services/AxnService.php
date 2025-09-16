@@ -34,7 +34,7 @@ class AxnService extends BaseService
 	 * {“aNumber”:“13811680001”,“xNumber”:“13100200001”,“autoaxbBind”:“1”,“autoBandingDura tion”:“60”}
 	 * @return mixed
 	 */
-	public function stdSet(array $data=[])
+	public function stdSet(array $data=[]): mixed
 	{
 		$data['appId'] =  $this->config['app_id'];
 		return $this->post('/Accounts/' . $this->config['account_sid'] . '/axn/std/set', $data);

@@ -19,4 +19,9 @@ return [
 
 	'host' => env('UNIIN_HOST', 'https://api.example.com'),
 
+	'logger'=>[
+		'enable' => false,
+		'path' => storage_path('logs/uniin'),
+	],
+
 ];

@@ -6,7 +6,7 @@ class WhitelistCallerService  extends BaseService
 {
 	/**
 	 * A路白名单号码报备申请接口
-	 * @param $member 报备人
+	 * @param $member  array 报备人
 	 * [
 	 * 'caller' => 报备人主叫号码,
 	 * 'reportName' => 号码所属人姓名,
@@ -16,10 +16,10 @@ class WhitelistCallerService  extends BaseService
 	 * 'idCardFrontPhoto' => 照片base64编码照片需小于32k,jpg格式,
 	 * 'idCardBackPhoto' => 照片base64编码照片需小于32k,jpg格式,
 	 * ]
-	 * @param $optType 0 新增成员 1 删除成员
+	 * @param int $optType 0 新增成员 1 删除成员
 	 * @return array|mixed
 	 */
-	public function report($member = [], $optType = 0)
+	public function report(array $member = [], int $optType = 0): mixed
 	{
 		$data = [
 			'appId' => $this->config['app_id'],
@@ -36,16 +36,13 @@ class WhitelistCallerService  extends BaseService
 	 * @param array $callers 电话号码
 	 * @return array|bool|string[]
 	 */
-	public function reportStatus($callers = []){
+	public function reportStatus(array $callers = []): array|bool
+	{
 		$data = [
 			'appId' => $this->config['app_id'],
 			'callers' => $this->sm4_encrypt_ecb(json_encode($callers))
 		];
-		$data = $this->post('/Accounts/' . $this->config['account_sid'] . '/whitelist/caller/report/status', $data);
-		if (data_get($data,'data')){
-			$data['data'] =json_decode( $this->sm4_decrypt_ecb($data['data']),1);
-		}
-		return $data;
+		return $this->post('/Accounts/' . $this->config['account_sid'] . '/whitelist/caller/report/status', $data,true);
 	}
 
 	/**
@@ -53,16 +50,13 @@ class WhitelistCallerService  extends BaseService
 	 * @param array $callers 电话号码
 	 * @return array|bool|string[]
 	 */
-	public function query($callers = []){
+	public function query(array $callers = []): array|bool
+	{
 		$data = [
 			'appId' => $this->config['app_id'],
 			'callers' => $this->sm4_encrypt_ecb(json_encode($callers))
 		];
-		$data = $this->post('/Accounts/' .  $this->config['account_sid'] . '/whitelist/caller/query', $data);
-		if (data_get($data,'data')){
-			$data['data'] =json_decode( $this->sm4_decrypt_ecb($data['data']),1);
-		}
-		return $data;
+		return $this->post('/Accounts/' .  $this->config['account_sid'] . '/whitelist/caller/query', $data,true);
 	}
 
 }

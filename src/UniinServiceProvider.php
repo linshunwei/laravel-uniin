@@ -3,6 +3,9 @@
 namespace Linshunwei\Uniin;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Log;
+use Monolog\Handler\RotatingFileHandler;
+use Monolog\Logger;
 
 class UniinServiceProvider extends ServiceProvider
 {
@@ -14,6 +17,18 @@ class UniinServiceProvider extends ServiceProvider
 			$configPath,
 			'uniin'
 		);
+
+		Log::extend('uniin', function ($app, array $config) {
+			return new Logger('uniin', [
+				new RotatingFileHandler(
+					storage_path('logs/uniin.log'),
+					7, // 保留 7 天
+					Logger::DEBUG
+				),
+			]);
+		});
+
+
 
 		$this->app->singleton('uniin', function () {
 			return new Uniin();

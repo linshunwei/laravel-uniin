@@ -3,9 +3,12 @@
 namespace Linshunwei\Uniin\Services;
 
 use GuzzleHttp\Client;
+use Linshunwei\Uniin\Traits\LoggerTrait;
 
 abstract class BaseService
 {
+	use LoggerTrait;
+
 	protected Client $client;
 	protected array $config;
 
@@ -15,12 +18,12 @@ abstract class BaseService
 		$time = date('YmdHis');
 		$this->client = new Client([
 			'base_uri' => $this->config['host'],
-			'timeout'  => 10,
-			'headers'  => [
-				'Accept'       => 'application/json',
-				'Content-Type'       => 'application/json',
-				'Authorization'       => base64_encode($this->config['account_sid'] . ':' . $time),
-				'sig'  =>  strtoupper(md5($this->config['account_sid'] . $this->config['auth_token']. $time)),
+			'timeout' => 10,
+			'headers' => [
+				'Accept' => 'application/json',
+				'Content-Type' => 'application/json',
+				'Authorization' => base64_encode($this->config['account_sid'] . ':' . $time),
+				'sig' => strtoupper(md5($this->config['account_sid'] . $this->config['auth_token'] . $time)),
 			],
 		]);
 	}
@@ -31,10 +34,21 @@ abstract class BaseService
 		return json_decode($response->getBody()->getContents(), true);
 	}
 
-	protected function post(string $uri, array $data = [])
+	protected function post(string $uri, array $data = [], $decrypt_data = false)
 	{
+		$start = microtime(true);
+
 		$response = $this->client->post($uri, ['json' => $data]);
-		return json_decode($response->getBody()->getContents(), true);
+		$body = json_decode($response->getBody()->getContents(), true);
+
+		if ($decrypt_data && data_get($body, 'data')) {
+			//todo 解码data
+			$body['data'] = json_decode($this->sm4_decrypt_ecb($body['data']), 1);
+		}
+		// 记录日志
+		$this->logRequestResponse("POST {$uri}", $data, $body, $start);
+
+		return $body;
 	}
 
 	public function sm4_encrypt_ecb(string $plaintext): string
