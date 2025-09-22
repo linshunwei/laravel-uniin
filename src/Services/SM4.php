@@ -41,7 +41,7 @@ class SM4
 	{
 	}
 
-	public function encrypt($key, $data, $replace = 1)
+	public function encrypt($key, $data, $replace = 0)
 	{
 		$this->sM4KeySchedule($key);
 
