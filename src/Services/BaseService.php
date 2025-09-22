@@ -53,8 +53,13 @@ abstract class BaseService
 
 	public function sm4_encrypt_ecb(string $plaintext): string
 	{
-		$cipher = 'SM4-ECB';
 		$key = substr($this->config['auth_token'], 0, 16);
+		if ($this->isOpensslEnabled()) {
+			$sm4 = new SM4();
+			return $sm4->encrypt($key, $plaintext);
+		}
+
+		$cipher = 'SM4-ECB';
 		// OPENSSL_ZERO_PADDING 表示不要自动填充，按 PKCS#7 自己补
 		$padded = $this->pkcs7_pad($plaintext, 16);
 		$ciphertext = openssl_encrypt($padded, $cipher, $key, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING);
@@ -63,8 +68,12 @@ abstract class BaseService
 
 	public function sm4_decrypt_ecb(string $ciphertext_b64): string
 	{
-		$cipher = 'SM4-ECB';
 		$key = substr($this->config['auth_token'], 0, 16);
+		if ($this->isOpensslEnabled()) {
+			$sm4 = new SM4();
+			return $sm4->decrypt($key, $ciphertext_b64);
+		}
+		$cipher = 'SM4-ECB';
 		$ciphertext = base64_decode($ciphertext_b64);
 		$plaintext_padded = openssl_decrypt($ciphertext, $cipher, $key, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING);
 		return $this->pkcs7_unpad($plaintext_padded);
@@ -81,6 +90,11 @@ abstract class BaseService
 	{
 		$pad = ord(substr($data, -1));
 		return substr($data, 0, -$pad);
+	}
+
+	protected function isOpensslEnabled(): bool
+	{
+		return (bool)$this->config['openssl']['enable'];
 	}
 
 }
