@@ -63,7 +63,7 @@ class SM4
 		return base64_encode($ciphertext);
 	}
 
-	public function decrypt($key, $data, $replace = 1)
+	public function decrypt($key, $data, $replace = 0)
 	{
 		// 替换
 		$data = str_replace("%2B", "+", $data);
