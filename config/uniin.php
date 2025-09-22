@@ -21,7 +21,7 @@ return [
 	'host' => env('UNIIN_HOST', 'https://api.example.com'),
 
 	'openssl' => [
-		'enable' => false,
+		'enable' => true,
 	],
 
 	'logger'=>[

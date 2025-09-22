@@ -54,7 +54,7 @@ abstract class BaseService
 	public function sm4_encrypt_ecb(string $plaintext): string
 	{
 		$key = substr($this->config['auth_token'], 0, 16);
-		if ($this->isOpensslEnabled()) {
+		if (!$this->isOpensslEnabled()) {
 			$sm4 = new SM4();
 			return $sm4->encrypt($key, $plaintext);
 		}
@@ -69,7 +69,7 @@ abstract class BaseService
 	public function sm4_decrypt_ecb(string $ciphertext_b64): string
 	{
 		$key = substr($this->config['auth_token'], 0, 16);
-		if ($this->isOpensslEnabled()) {
+		if (!$this->isOpensslEnabled()) {
 			$sm4 = new SM4();
 			return $sm4->decrypt($key, $ciphertext_b64);
 		}
